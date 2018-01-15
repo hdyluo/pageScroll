@@ -27,6 +27,10 @@
 
 @implementation DYPageViewController
 
+- (void)dealloc{
+    DLog(@"%@释放", NSStringFromClass([self class]));
+}
+
 - (instancetype)initWithVCS:(NSArray *)VCS{
     if (self = [super init]) {
         self.vcs = VCS;
@@ -78,7 +82,7 @@
         weakSelf.targetTag = weakVC.vTag;
         UIScrollView * scrollView = [weakSelf.subPageVC valueForKey:@"_scrollView"];
         scrollView.scrollEnabled = YES;
-        self.menuView.userInteractionEnabled = YES;
+        weakSelf.menuView.userInteractionEnabled = YES;
     };
     vc.didDisAppearAction = ^{
         DLog(@"第%ld个视图执行viewDidDisappera",(long)weakVC.vTag);
@@ -94,9 +98,9 @@
                 break;
             case DYPageChangeTypeCurrentType:
                 if (weakVC.vTag > tag) {
-                    [weakSelf.subPageVC setViewControllers:@[self.vcs[tag]] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+                    [weakSelf.subPageVC setViewControllers:@[weakSelf.vcs[tag]] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
                 }else{
-                    [weakSelf.subPageVC setViewControllers:@[self.vcs[tag]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+                    [weakSelf.subPageVC setViewControllers:@[weakSelf.vcs[tag]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
                 }
                 break;
             default:

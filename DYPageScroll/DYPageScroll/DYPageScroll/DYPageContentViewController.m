@@ -7,12 +7,19 @@
 //
 
 #import "DYPageContentViewController.h"
+#import "DYStyleDefine.h"
+#import "DYSystemDefine.h"
 
 @interface DYPageContentViewController ()
 
 @end
 
 @implementation DYPageContentViewController
+
+- (void)dealloc{
+    DLog(@"%@释放", NSStringFromClass([self class]));
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
